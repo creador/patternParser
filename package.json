@@ -1,0 +1,24 @@
+{
+  "name": "pattern",
+  "version": "1.0.0",
+  "description": "Pattern Parser in nodejs",
+  "main": "pattern.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creador/patternParser.git"
+  },
+  "scripts": {},
+  "keywords": [
+    "pattern",
+    "parser",
+    "matcher",
+    "creador"
+  ],
+  "author": "Pablo Schaffner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creador/patternParser/issues"
+  },
+  "homepage": "https://github.com/creador/patternParser#readme",
+  "dependencies": {}
+}
