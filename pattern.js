@@ -31,6 +31,11 @@ class patternParser {
 
 	pattern (pattern) {
 		// private method
+		const escapeRegExp = (str, asterisks) => {
+            const regexp = (asterisks) ? /[\-\[\]\/\{\}\(\)\*\<\>\+\?\ \,\.\\\^\$\|]/g : /[\-\[\]\/\{\}\(\)\<\>\+\?\ \,\.\\\^\$\|]/g;
+            return str.replace(regexp, '\\$&');
+        }
+
 		const findVariables = (text,symbol,symbol_closing) => {
 			var vars = '', symbol_t = '', symbol_l = '';
 			var symbol_tb = '', symbol_lb = '', partirEn = 0, tmp_name = '';
@@ -66,25 +71,28 @@ class patternParser {
 		this.tokens = findVariables(pattern,global.config.open,global.config.close);
 
 		// replace pattern content with catch-alls
-		let catchs = pattern;
+		let catchs_e = pattern;
 		this.tokens.forEach(token => {
-			catchs = catchs.replace(global.config.open+token+global.config.close, '(.*)');
+			catchs_e = catchs_e.replace(global.config.open+token+global.config.close, '(.*)');
 		});
+		let catchs = escapeRegExp(catchs_e,true).split('\\(\\.\\*\\)').join('(.*)');
 
 		// search catch-alls in given content
-		var resp = {};
+		var resp = [];
 		if (catchs!=pattern) {
-			let catches = new RegExp(`^${catchs}$`,'gi').exec(global.content);
-			var cnt=0;
-
-			if (catches!=null) {
-				this.tokens.forEach(token => {
-					if (cnt<catches.length-1) resp[token] = catches[cnt+1];
-					cnt++; 
-				});
-			} else {
-				console.error('extract-string: No tokens found.');
-				resp={};
+			let myregex = new RegExp(catchs,'gim');
+			let catches = [], result;
+			while ((result = myregex.exec(global.content)) != null) {
+				let cnta = 0, line = {};
+				if (result.length>=this.tokens.length) {
+					result.forEach(rvar => {
+						if (cnta!=0) {
+							line[this.tokens[cnta-1]] = rvar;
+						}
+						cnta++;
+					});
+					resp.push(line);
+				}
 			}
 		}
 		return resp;

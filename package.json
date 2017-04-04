@@ -1,6 +1,6 @@
 {
   "name": "extract-string",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "String Pattern extractor for nodejs",
   "main": "pattern.js",
   "repository": {

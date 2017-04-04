@@ -35,45 +35,36 @@ var extract = require('extract-string');
 #### Example 1
 
 ```js
-var test = extract('Hello my friends of the world.')
-			.pattern('{hi} my {type} of the {where}.');
+var test = extract('Hello my friends of the world.\nHello my dear friends of this world.')
+			.pattern('{hi} my {type} of {where}.');
 
 /*
 returns:
-{
+[{
 	hi : 'Hello',
 	type : 'friends',
-	where : 'world'
+	where : 'the world'
+},
+{
+	hi : 'Hello',
+	type : 'dear friends',
+	where : 'this world'
 }
+]
 */
 ```
 
 #### Example 2
 
 ```js
-var test = extract('<a>Hola amigos</a><u>este texto esta subrayado.</u>')
-			.pattern('<a>{saludo}</a><u>{underscore}</u>');
-
-/*
-returns:
-{
-	saludo : 'Hola amigos',
-	underscore : 'este texto esta subrayado.'
-}
-*/
-```
-
-#### Example 3
-
-```js
 var test = extract('/users/12345/friends/6789/picture')
 			.pattern('/users/{userid}/friends/{friendid}/picture');
 /*
 returns:
-{
+[{
 	userid : 12345,
 	friendid : 6789
-}
+}]
 */
 ```
 
