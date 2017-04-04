@@ -1,7 +1,7 @@
 {
-  "name": "pattern",
+  "name": "extract-string",
   "version": "1.0.0",
-  "description": "Pattern Parser in nodejs",
+  "description": "String Pattern extractor for nodejs",
   "main": "pattern.js",
   "repository": {
     "type": "git",
@@ -12,6 +12,9 @@
     "pattern",
     "parser",
     "matcher",
+    "regexp",
+    "extract-params",
+    "patternParser",
     "creador"
   ],
   "author": "Pablo Schaffner",

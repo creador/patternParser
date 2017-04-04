@@ -34,7 +34,7 @@ class patternParser {
 		const findVariables = (text,symbol,symbol_closing) => {
 			var vars = '', symbol_t = '', symbol_l = '';
 			var symbol_tb = '', symbol_lb = '', partirEn = 0, tmp_name = '';
-			var allowed_symbols = 'a-zA-Z0-9\\_\\-\\+\\/\\ \\*\\{\\}\\.\\,\\[\\]\\(\\)\\\'\%\?\"';
+			var allowed_symbols = 'a-zA-Z0-9\\_\\-\\+\\/\\ \\*\\{\\}\\.\\,\\[\\]\\(\\)\\\'\%\?\"\<\>\\\\';
 			for (let qss in symbol) {
 				symbol_l  = symbol[qss];
 				symbol_t += '[\\' + symbol_l + ']';
@@ -77,10 +77,15 @@ class patternParser {
 			let catches = new RegExp(`^${catchs}$`,'gi').exec(global.content);
 			var cnt=0;
 
-			this.tokens.forEach(token => {
-				if (cnt<catches.length-1) resp[token] = catches[cnt+1];
-				cnt++; 
-			});
+			if (catches!=null) {
+				this.tokens.forEach(token => {
+					if (cnt<catches.length-1) resp[token] = catches[cnt+1];
+					cnt++; 
+				});
+			} else {
+				console.error('extract-string: No tokens found.');
+				resp={};
+			}
 		}
 		return resp;
 	}
